@@ -33,7 +33,7 @@ app.get('/games', (req, res) => {
     res.json(DB.games)
 })
 
-app.get('/games/:id', (req, res) => {
+app.get('/game/:id', (req, res) => {
     if (isNaN(req.params.id)) {
         res.sendStatus(400)
     } else {
@@ -47,6 +47,20 @@ app.get('/games/:id', (req, res) => {
         res.send(correctGame)
     }
     
+})
+
+app.post('/game', (req, res) => {
+    var {title, year, price} = req.body
+
+    DB.games.push({
+        id: 63,
+        title,
+        year,
+        price
+    })
+
+    res.sendStatus(200)
+
 })
 
 app.listen(50000, () => {
