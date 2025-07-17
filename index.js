@@ -80,6 +80,31 @@ app.delete('/game/:id', (req, res) => {
     }
 })
 
+app.put('/game/:id', (req, res) => {
+    if (isNaN(req.params.id)) {
+        res.sendStatus(400)
+    } else {
+        var id = parseInt(req.params.id)
+        var correctGame = DB.games.find(g => g.id == id)
+
+        if(!correctGame) {
+            res.sendStatus(404)
+        }
+
+        var {title, year, price} = req.body
+        
+        if (title || year || price != undefined) {
+            correctGame.title = title || correctGame.title
+            correctGame.year = year || correctGame.year
+            correctGame.price = price || correctGame.price
+
+            res.sendStatus(200)
+        }
+
+    }
+    
+})
+
 app.listen(50000, () => {
     console.log("API está rodando!")
 })
